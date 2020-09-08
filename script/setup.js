@@ -64,19 +64,18 @@ const generateBadge = (style, dfc) => (name, badgeItem, index) => {
     const outputName = `${suffix(`${fileName}${index !== void 0 ? `_${index + 1}` : ''}`, style, dfc ? 'dfc' : '')}.svg`;
     const output = `${outputPath}${outputName}`;
 
-    if (!fs.existsSync(output)) {
-        console.log(execSync(`badge ${[
-            ...dfc ? ['--dynamic-fore-color'] : [''],
-            `-c ${color}`,
-            `-s ${skin || 'dark'}`,
-            `-t "${name}"`,
-            `-p ${distPath}${fname}`,
-            `--style=${style}`,
-            `-o ${output}`,
-        ].join(' ')}`, {
-            encoding: 'utf8'
-        }));
-    }
+    console.log(execSync(`badge ${[
+        ...dfc ? ['--dynamic-fore-color'] : [''],
+        `-c ${color}`,
+        `-s ${skin || 'dark'}`,
+        `-t "${name}"`,
+        `-p ${distPath}${fname}`,
+        `--style=${style}`,
+        `-o ${output}`,
+        '-y',
+    ].join(' ')}`, {
+        encoding: 'utf8'
+    }));
 
     /** documenting */
     return `- [![${fileName}](${output})](${linkPath}${outputName}) ${description}\n`;
